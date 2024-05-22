@@ -165,11 +165,9 @@ fn write_types(types: &[ProtocolType]) -> String {
     let mut writer = Writer::default();
     writer.line("use serde::{Deserialize, Serialize};");
     writer.finished_object();
-    'outer: for ty in types {
-        for suffix in ["Request"] {
-            if ty.name.ends_with(suffix) {
-                continue 'outer;
-            }
+    for ty in types {
+        if ty.name.ends_with("Request") {
+            continue;
         }
         println!("writing type {}", ty.name);
         if ty.name.ends_with("Response") {
@@ -586,7 +584,7 @@ impl Object {
         dst.line("#[derive(Debug, Clone, Deserialize, Serialize)]");
         let mut pending = Vec::new();
         if self.fields.len() == 0 {
-            dst.line(format!("pub struct {} {{}}", name));
+            dst.line(format!("pub struct {};", name));
         } else {
             dst.line(format!("pub struct {} {{", name));
             for field in &self.fields {

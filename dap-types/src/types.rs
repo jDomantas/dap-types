@@ -583,7 +583,7 @@ pub enum InitializeRequestArgumentsPathFormat {
 
 /// Arguments for `configurationDone` request.
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct ConfigurationDoneArguments {}
+pub struct ConfigurationDoneArguments;
 
 /// Arguments for `disconnect` request.
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -1143,7 +1143,7 @@ pub struct ModulesResponse {
 
 /// Arguments for `loadedSources` request.
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct LoadedSourcesArguments {}
+pub struct LoadedSourcesArguments;
 
 /// Response to `loadedSources` request.
 #[derive(Debug, Clone, Deserialize, Serialize)]
