@@ -34,7 +34,7 @@ fn generated_files_are_up_to_date() {
 
 fn write_file(file: &str, contents: &str) {
     let contents = with_disclaimer(contents);
-    std::fs::write(dst_path(file), &contents).unwrap();
+    std::fs::write(dst_path(file), contents).unwrap();
 }
 
 fn with_disclaimer(contents: &str) -> String {
@@ -476,8 +476,8 @@ impl Writer {
                 self.finished_object();
                 continue;
             }
-            if line.starts_with("    ") {
-                self.indented(&line[4..]);
+            if let Some(indented) = line.strip_prefix("    ") {
+                self.indented(indented);
             } else {
                 self.line(line);
             }
@@ -583,7 +583,7 @@ impl Object {
         }
         dst.line("#[derive(Debug, Clone, Deserialize, Serialize)]");
         let mut pending = Vec::new();
-        if self.fields.len() == 0 {
+        if self.fields.is_empty() {
             dst.line(format!("pub struct {};", name));
         } else {
             dst.line(format!("pub struct {} {{", name));
@@ -618,7 +618,7 @@ impl Object {
 impl Enum {
     fn write(&self, name: &str, dst: &mut Writer) {
         if let Some(doc) = &self.doc {
-            dst.doc(&doc);
+            dst.doc(doc);
         }
         if self.exhaustive {
             dst.line("#[derive(PartialEq, Eq, Debug, Hash, Clone, Copy, Deserialize, Serialize)]");
@@ -635,7 +635,7 @@ impl Enum {
                 dst.indented_doc(&desc[i]);
             }
             dst.indented(format!("#[serde(rename = \"{value}\")]"));
-            dst.indented(format!("{},", to_pascal_case(&value)));
+            dst.indented(format!("{},", to_pascal_case(value)));
         }
         if !self.exhaustive {
             dst.indented("#[serde(other)]");

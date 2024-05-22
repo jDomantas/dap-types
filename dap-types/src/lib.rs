@@ -2,8 +2,11 @@
 ///
 /// Based on: https://microsoft.github.io/debug-adapter-protocol/specification
 
+/// Types representing events, with associated payload types.
 pub mod events;
+/// Types representing protocol messages.
 pub mod messages;
+/// Types representing requests, with associated argument and response types.
 pub mod requests;
 mod types;
 
