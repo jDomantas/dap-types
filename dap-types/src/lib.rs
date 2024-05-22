@@ -1,6 +1,7 @@
-/// Debugger Adapter Protocol types for Rust.
-///
-/// Based on: https://microsoft.github.io/debug-adapter-protocol/specification
+//! Debugger Adapter Protocol types for Rust.
+//!
+//! Based on: <https://microsoft.github.io/debug-adapter-protocol/specification>
+//! (generated from machine-readable schema).
 
 /// Types representing events, with associated payload types.
 pub mod events;
